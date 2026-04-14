@@ -1,0 +1,34 @@
+module:
+  id: aws/s3/bucket-v2
+  name: s3-bucket-v2
+  system: aws
+  version: 2.0.0
+  description: "S3 bucket module with AWS CloudControl-shaped inputs and outputs, so tfstate aligns 1:1 with live AWS for drift detection."
+  categories:
+    - storage
+    - s3
+  authors:
+    - name: "Sarath"
+      email: "sarath@lace.cloud"
+  registry_visibility: private
+  example: |
+    module "bucket" {
+      source = "git::https://github.com/Sarath2k01/registry-tf-private.git//modules/aws/s3/bucket-v2?ref=v2.0.0"
+
+      BucketName       = "my-app-prod-artifacts-123456789"
+      VersioningStatus = "Enabled"
+      OwnershipControls = "BucketOwnerEnforced"
+      SSEAlgorithm     = "AES256"
+
+      PublicAccessBlockConfiguration = {
+        BlockPublicAcls       = true
+        BlockPublicPolicy     = true
+        IgnorePublicAcls      = true
+        RestrictPublicBuckets = true
+      }
+
+      Tags = {
+        Name        = "my-app-prod-artifacts-123456789"
+        Environment = "production"
+      }
+    }
