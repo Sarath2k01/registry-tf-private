@@ -61,10 +61,10 @@ output "BucketEncryption" {
   description = "Server-side encryption in CloudControl shape"
   value = {
     ServerSideEncryptionConfiguration = {
-      BucketKeyEnabled = aws_s3_bucket_server_side_encryption_configuration.this.rule[0].bucket_key_enabled
+      BucketKeyEnabled = one(aws_s3_bucket_server_side_encryption_configuration.this.rule).bucket_key_enabled
       ServerSideEncryptionByDefault = {
-        SSEAlgorithm   = aws_s3_bucket_server_side_encryption_configuration.this.rule[0].apply_server_side_encryption_by_default[0].sse_algorithm
-        KMSMasterKeyID = aws_s3_bucket_server_side_encryption_configuration.this.rule[0].apply_server_side_encryption_by_default[0].kms_master_key_id
+        SSEAlgorithm   = one(one(aws_s3_bucket_server_side_encryption_configuration.this.rule).apply_server_side_encryption_by_default).sse_algorithm
+        KMSMasterKeyID = one(one(aws_s3_bucket_server_side_encryption_configuration.this.rule).apply_server_side_encryption_by_default).kms_master_key_id
       }
     }
   }
